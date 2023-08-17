@@ -1,3 +1,4 @@
+chcp 65001
 @echo off
 setlocal enabledelayedexpansion
 
@@ -9,53 +10,53 @@ echo.
 echo.
 
 echo ------------------------------
-echo Find Discord installation Path
+echo 查找Discord安装路径
 set discordPath="%LOCALAPPDATA%\Discord"
 if exist !discordPath! (
-    echo Discord Path: !discordPath!
+    echo Discord安装: !discordPath!
 ) else (
-    echo Discord installation directory not detected
+    echo 未检测到Discord安装目录
     pause
 	exit /b
 )
 
 set discordRoamingPath="%USERPROFILE%\AppData\Roaming\discord"
 if exist !discordRoamingPath! (
-    echo Discord userdata: !discordRoamingPath!
+    echo Discord用户: !discordRoamingPath!
 ) else (
-    echo Discord is missing the main file, please start Discord once normally, and then run it again
+    echo Discord缺少主要文件，请先完整启动一次Discord后再次运行
     pause
 	exit /b
 )
 
 echo ------------------------------
-echo Find app.asar file...
+echo 检测app.asar文件...
 if not exist app.asar (
-    echo The app.asar file is not found in the current directory, start downloading from Github...
+    echo 当前目录下没有找到app.asar文件，开始从Github下载...
     powershell -Command "Invoke-WebRequest -Uri 'https://github.com/XiaoXianHW/Discord-Skip-AutoUpdate/releases/download/AppAsar/app.asar' -OutFile 'app.asar'"
 
     for %%I in (app.asar) do set fileSize=%%~zI
 	
     if not !fileSize!==6173488 (
-        echo app.asar is incomplete and needs to be re-downloaded by itself.
+        echo app.asar不完整，需要自行重新下载。
         pause
 		exit /b
     )
 )
-echo app.asar is ready
+echo app.asar已就绪
 
 echo ------------------------------
-echo Checking Discord progress...
+echo 检查Discord进程...
 tasklist | findstr /i "Discord.exe" >nul
 if not errorlevel 1 (
-    echo Please close the Discord process before running this install.bat
+    echo 请关闭Discord进程后再运行本脚本
     pause
 	exit /b
 )
-echo Discord is not running
+echo Discord未在运行
 
 echo ------------------------------
-echo Update Discord's app.asar...
+echo 更新Discord的app.asar...
 for /d %%a in ("!discordPath!\app-*") do (
     set discordAppDir=%%a
     break
@@ -63,15 +64,15 @@ for /d %%a in ("!discordPath!\app-*") do (
 
 if defined discordAppDir (
     copy /Y app.asar "!discordAppDir!\resources\"
-    echo app.asar has been replaced by !discordAppDir!\resources\
+    echo app.asar已替换至!discordAppDir!\resources\
 ) else (
-    echo Discord's app-* directory not found
+    echo 没有找到Discord的app-*目录
     pause
 	exit /b
 )
 
 echo ------------------------------
-echo Copy Modules to Discord user path...
+echo 复制Modules到Discord用户路径...
 
 for /f "tokens=2 delims=-" %%b in ("!discordAppDir!") do (
     set "versionNumber=%%b"
@@ -82,15 +83,15 @@ set "destDir=!discordRoamingPath!\!versionNumber!\modules"
 
 for /d %%c in ("!sourceDir!\*") do (
     for /d %%d in ("%%c\*") do (
-        echo Copy: %%d -> !destDir!\%%~nd
+        echo 正在复制: %%d -> !destDir!\%%~nd
         xcopy /E /I "%%d" "!destDir!\%%~nd\"
     )
 )
 echo.
-echo Modules copied
+echo Modules复制完成
 
 echo ------------------------------
-echo Updating Discord start menu shortcuts...
+echo 更新Discord开始菜单快捷方式...
 
 set startMenuLink="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
 if exist !startMenuLink! (
@@ -98,7 +99,7 @@ if exist !startMenuLink! (
 )
 powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!startMenuLink!'); $Shortcut.TargetPath = '%LOCALAPPDATA%\Discord\app-1.0.9016\Discord.exe'; $Shortcut.Save()"
 
-echo Updating the Discord desktop shortcut...
+echo 更新Discord桌面快捷方式...
 for /f "tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set desktopPath=%%b
 set desktopLink="!desktopPath!\Discord.lnk"
 if exist "!desktopLink!" (
@@ -106,9 +107,9 @@ if exist "!desktopLink!" (
 )
 powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!desktopLink!'); $Shortcut.TargetPath = '%LOCALAPPDATA%\Discord\app-1.0.9016\Discord.exe'; $Shortcut.Save()"
 
-echo The Discord shortcut has been updated.
+echo Discord快捷方式已更新。
 
 echo ------------------------------
-echo Discord-Skip-AutoUpdate install Success!
+echo Discord-Skip-AutoUpdate已应用
 
 pause
