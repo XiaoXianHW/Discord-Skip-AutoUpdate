@@ -97,7 +97,7 @@ set startMenuLink="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Discord Inc\D
 if exist !startMenuLink! (
     del !startMenuLink!
 )
-powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!startMenuLink!'); $Shortcut.TargetPath = '%LOCALAPPDATA%\Discord\app-1.0.9016\Discord.exe'; $Shortcut.Save()"
+powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!startMenuLink!'); $Shortcut.TargetPath = '!discordAppDir!\Discord.exe'; $Shortcut.Save()"
 
 echo 更新Discord桌面快捷方式...
 for /f "tokens=2*" %%a in ('reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set desktopPath=%%b
@@ -105,7 +105,7 @@ set desktopLink="!desktopPath!\Discord.lnk"
 if exist "!desktopLink!" (
     del "!desktopLink!"
 )
-powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!desktopLink!'); $Shortcut.TargetPath = '%LOCALAPPDATA%\Discord\app-1.0.9016\Discord.exe'; $Shortcut.Save()"
+powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('!desktopLink!'); $Shortcut.TargetPath = '!discordAppDir!\Discord.exe'; $Shortcut.Save()"
 
 echo Discord快捷方式已更新。
 
