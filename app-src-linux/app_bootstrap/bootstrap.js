@@ -150,10 +150,6 @@ function startUpdate() {
   const startMinimized = hasArgvFlag('--start-minimized');
   appUpdater.update(startMinimized, () => {
     try {
-		
-	  // Require discord_utils
-	  //requireNative('../../../modules/discord_utils-2/discord_utils/discord_utils');
-	  
       coreModule = requireNative('../../../modules/discord_desktop_core-1/discord_desktop_core');
       coreModule.startup({
         paths,
