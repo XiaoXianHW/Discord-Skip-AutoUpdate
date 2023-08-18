@@ -110,6 +110,6 @@ powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut 
 echo Discord快捷方式已更新。
 
 echo ------------------------------
-echo Discord-Skip-AutoUpdate已应用
+echo Discord-Skip-AutoUpdate更新成功!
 
 pause
