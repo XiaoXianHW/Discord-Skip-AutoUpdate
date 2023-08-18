@@ -32,7 +32,7 @@ echo ------------------------------
 echo Find app.asar file...
 if not exist app.asar (
     echo The app.asar file is not found in the current directory, start downloading from Github...
-    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/XiaoXianHW/Discord-Skip-AutoUpdate/releases/download/AppAsar/app.asar' -OutFile 'app.asar'"
+    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/XiaoXianHW/Discord-Skip-AutoUpdate/releases/download/AppAsar/app-win.asar' -OutFile 'app.asar'"
 
     for %%I in (app.asar) do set fileSize=%%~zI
 	

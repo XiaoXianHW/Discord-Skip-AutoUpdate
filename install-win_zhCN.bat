@@ -33,7 +33,7 @@ echo ------------------------------
 echo 检测app.asar文件...
 if not exist app.asar (
     echo 当前目录下没有找到app.asar文件，开始从Github下载...
-    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/XiaoXianHW/Discord-Skip-AutoUpdate/releases/download/AppAsar/app.asar' -OutFile 'app.asar'"
+    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/XiaoXianHW/Discord-Skip-AutoUpdate/releases/download/AppAsar/app-win.asar' -OutFile 'app.asar'"
 
     for %%I in (app.asar) do set fileSize=%%~zI
 	
