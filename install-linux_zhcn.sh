@@ -59,7 +59,7 @@ if [ -d "$discordPath" ]; then
     sudo cp app.asar "$discordPath/resources/"
     echo "app.asar已替换至 $discordPath/resources/"
 else
-    echo "没有找到 /usr/share"
+    echo "没有找到 /usr/share/discord"
     exit 1
 fi
 

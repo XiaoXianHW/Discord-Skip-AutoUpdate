@@ -59,7 +59,7 @@ if [ -d "$discordPath" ]; then
     sudo cp app.asar "$discordPath/resources/"
     echo "app.asar has been replaced in $discordPath/resources/"
 else
-    echo "Discord executable not found in /usr/share"
+    echo "Discord executable not found in /usr/share/discord"
     exit 1
 fi
 
