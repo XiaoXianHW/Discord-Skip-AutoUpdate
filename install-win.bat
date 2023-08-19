@@ -55,11 +55,22 @@ if not errorlevel 1 (
 echo Discord is not running
 
 echo ------------------------------
-echo Update Discord's app.asar...
+echo Backup original app.asar...
+
 for /d %%a in ("!discordPath!\app-*") do (
     set discordAppDir=%%a
     break
 )
+
+if exist "!discordAppDir!\resources\app.asar" (
+    move /Y "!discordAppDir!\resources\app.asar" "!discordAppDir!\resources\app.asar.bak"
+    echo Original app.asar has been backed up as !discordAppDir!\resources\app.asar.bak
+) else (
+    echo Original app.asar not found, skipping backup step
+)
+
+echo ------------------------------
+echo Update Discord's app.asar...
 
 if defined discordAppDir (
     copy /Y app.asar "!discordAppDir!\resources\"

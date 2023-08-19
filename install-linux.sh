@@ -43,6 +43,16 @@ fi
 echo "Discord is not running"
 
 echo "-------------------------------"
+echo "Backup original app.asar..."
+originalAsar="$discordPath/resources/app.asar"
+if [ -f "$originalAsar" ]; then
+    sudo mv "$originalAsar" "$discordPath/resources/app.asar.bak"
+    echo "Original app.asar has been backed up as $discordPath/resources/app.asar.bak"
+else
+    echo "Original app.asar not found, skipping backup step"
+fi
+
+echo "-------------------------------"
 echo "Update Discord's app.asar..."
 
 if [ -d "$discordPath" ]; then

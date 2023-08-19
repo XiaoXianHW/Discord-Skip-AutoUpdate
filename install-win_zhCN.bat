@@ -56,11 +56,22 @@ if not errorlevel 1 (
 echo Discord未在运行
 
 echo ------------------------------
-echo 更新Discord的app.asar...
+echo 备份原始的app.asar...
+
 for /d %%a in ("!discordPath!\app-*") do (
     set discordAppDir=%%a
     break
 )
+
+if exist "!discordAppDir!\resources\app.asar" (
+    move /Y "!discordAppDir!\resources\app.asar" "!discordAppDir!\resources\app.asar.bak"
+    echo 原始的app.asar已被备份为app.asar.bak
+) else (
+    echo 未找到原始的app.asar，跳过备份步骤
+)
+
+echo ------------------------------
+echo 更新Discord的app.asar...
 
 if defined discordAppDir (
     copy /Y app.asar "!discordAppDir!\resources\"

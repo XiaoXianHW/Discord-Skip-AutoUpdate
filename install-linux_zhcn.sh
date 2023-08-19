@@ -43,6 +43,16 @@ fi
 echo "Discord未在运行"
 
 echo "-------------------------------"
+echo "备份app.asar..."
+originalAsar="$discordPath/resources/app.asar"
+if [ -f "$originalAsar" ]; then
+    sudo mv "$originalAsar" "$discordPath/resources/app.asar.bak"
+    echo "已备份app.asar: $discordPath/resources/app.asar.bak"
+else
+    echo "app.asar文件不存在，跳过备份步骤"
+fi
+
+echo "-------------------------------"
 echo "更新Discord的app.asar..."
 
 if [ -d "$discordPath" ]; then
